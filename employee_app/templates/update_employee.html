@@ -1,0 +1,290 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Update Employee
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-4">
+
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-1">
+                Update Employee
+            </h2>
+
+            <p class="text-muted mb-0">
+                Edit and update employee information
+            </p>
+        </div>
+
+        <a href="{% url 'employee_details' employee.emp_id %}"
+           class="btn btn-outline-secondary">
+            ← Back to Details
+        </a>
+
+    </div>
+
+
+    <!-- Update Card -->
+    <div class="card border-0 shadow-sm">
+
+        <div class="card-header bg-dark text-white py-3">
+
+            <h5 class="mb-0">
+                Employee Information
+            </h5>
+
+        </div>
+
+
+        <div class="card-body p-4">
+
+            <form method="POST"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row g-4">
+
+                    <!-- Employee ID -->
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Employee ID
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control bg-light"
+                            value="{{ employee.emp_id }}"
+                            readonly>
+
+                        <div class="form-text">
+                            Employee ID cannot be changed.
+                        </div>
+
+                    </div>
+
+
+                    <!-- Name -->
+                    <div class="col-md-6">
+
+                        <label for="name"
+                               class="form-label fw-semibold">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="name"
+                            id="name"
+                            class="form-control"
+                            value="{{ employee.name }}"
+                            placeholder="Enter employee name"
+                            required>
+
+                    </div>
+
+
+                    <!-- Email -->
+                    <div class="col-md-6">
+
+                        <label for="email"
+                               class="form-label fw-semibold">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            id="email"
+                            class="form-control"
+                            value="{{ employee.email }}"
+                            placeholder="example@gmail.com"
+                            required>
+
+                    </div>
+
+
+                    <!-- Phone -->
+                    <div class="col-md-6">
+
+                        <label for="phone"
+                               class="form-label fw-semibold">
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="text"
+                            name="phone"
+                            id="phone"
+                            class="form-control"
+                            value="{{ employee.phone }}"
+                            maxlength="10"
+                            pattern="[0-9]{10}"
+                            required>
+
+                        <div class="form-text">
+                            Enter a valid 10-digit phone number.
+                        </div>
+
+                    </div>
+
+
+                    <!-- Department -->
+                    <div class="col-md-6">
+
+                        <label for="department"
+                               class="form-label fw-semibold">
+                            Department
+                        </label>
+
+                        <input
+                            type="text"
+                            name="department"
+                            id="department"
+                            class="form-control"
+                            value="{{ employee.department }}"
+                            placeholder="e.g. IT, HR, Finance"
+                            required>
+
+                    </div>
+
+
+                    <!-- Salary -->
+                    <div class="col-md-6">
+
+                        <label for="salary"
+                               class="form-label fw-semibold">
+                            Salary
+                        </label>
+
+                        <input
+                            type="number"
+                            name="salary"
+                            id="salary"
+                            class="form-control"
+                            value="{{ employee.salary }}"
+                            min="0"
+                            required>
+
+                    </div>
+
+
+                    <!-- Employee Photo -->
+                    <div class="col-12">
+
+                        <label for="photo"
+                               class="form-label fw-semibold">
+                            Employee Photo
+                        </label>
+
+
+                        {% if employee.photo %}
+
+                            <div class="mb-3">
+
+                                <p class="text-muted small mb-2">
+                                    Current Photo
+                                </p>
+
+                                <img
+                                    src="{{ employee.photo.url }}"
+                                    alt="Employee Photo"
+                                    width="120"
+                                    height="120"
+                                    class="rounded-circle shadow-sm"
+                                    style="
+                                        object-fit: cover;
+                                        border: 4px solid #f1f3f5;
+                                    "
+                                >
+
+                            </div>
+
+                        {% else %}
+
+                            <div class="mb-3">
+
+                                <div
+                                    class="rounded-circle bg-light
+                                           text-secondary
+                                           d-flex align-items-center
+                                           justify-content-center"
+                                    style="
+                                        width:120px;
+                                        height:120px;
+                                        font-size:45px;
+                                    ">
+
+                                    👤
+
+                                </div>
+
+                                <small class="text-muted">
+                                    No photo uploaded
+                                </small>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <input
+                            type="file"
+                            name="photo"
+                            id="photo"
+                            class="form-control"
+                            accept="image/*">
+
+                        <div class="form-text">
+                            Select a new photo only if you want to replace
+                            the current photo.
+                        </div>
+
+                    </div>
+
+
+                    <!-- Buttons -->
+                    <div class="col-12">
+
+                        <hr class="my-2">
+
+                        <div class="d-flex justify-content-end gap-2 mt-3">
+
+                            <a
+                                href="{% url 'employee_details' employee.emp_id %}"
+                                class="btn btn-outline-secondary px-4">
+
+                                Cancel
+
+                            </a>
+
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary px-4">
+
+                                ✏️ Update Employee
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

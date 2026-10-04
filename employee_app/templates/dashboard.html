@@ -1,0 +1,886 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .dashboard-title {
+        font-weight: 700;
+        color: #212529;
+    }
+
+    .dashboard-subtitle {
+        color: #6c757d;
+        font-size: 15px;
+    }
+
+    /* ================= STAT CARDS ================= */
+
+    .stat-card {
+        border: none;
+        border-radius: 15px;
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12) !important;
+    }
+
+    .stat-icon {
+        width: 55px;
+        height: 55px;
+        border-radius: 12px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 25px;
+    }
+
+
+    /* ================= ACTION CARDS ================= */
+
+    .action-card {
+        border: none;
+        border-radius: 15px;
+        transition: all 0.3s ease;
+    }
+
+    .action-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12) !important;
+    }
+
+    .action-icon {
+        font-size: 38px;
+    }
+
+
+    /* ================= SECTION CARDS ================= */
+
+    .section-card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .section-header {
+        font-weight: 600;
+        padding: 16px 20px;
+    }
+
+
+    /* ================= TABLE ================= */
+
+    .table th {
+        white-space: nowrap;
+    }
+
+
+    /* ================= CHART ================= */
+
+    .chart-container {
+        position: relative;
+        height: 350px;
+        width: 100%;
+    }
+
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 768px) {
+
+        .chart-container {
+            height: 300px;
+        }
+
+        .dashboard-title {
+            font-size: 24px;
+        }
+
+    }
+
+</style>
+
+
+<div class="container py-4">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="mb-4">
+
+        <h2 class="dashboard-title mb-1">
+            Employee Dashboard
+        </h2>
+
+        <p class="dashboard-subtitle mb-0">
+            Manage employees, departments and salary information
+        </p>
+
+    </div>
+
+
+
+    <!-- ================= STATISTICS ================= -->
+
+    <div class="row g-4 mb-4">
+
+
+        <!-- Total Employees -->
+
+        <div class="col-lg-4 col-md-6">
+
+            <div class="card stat-card shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <p class="text-muted mb-2">
+                                Total Employees
+                            </p>
+
+                            <h2 class="fw-bold mb-0">
+                                {{ total_employees }}
+                            </h2>
+
+                        </div>
+
+                        <div class="stat-icon bg-primary bg-opacity-10 text-primary">
+                            👥
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Total Departments -->
+
+        <div class="col-lg-4 col-md-6">
+
+            <div class="card stat-card shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <p class="text-muted mb-2">
+                                Total Departments
+                            </p>
+
+                            <h2 class="fw-bold mb-0">
+                                {{ total_departments }}
+                            </h2>
+
+                        </div>
+
+                        <div class="stat-icon bg-success bg-opacity-10 text-success">
+                            🏢
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Recent Employees -->
+
+        <div class="col-lg-4 col-md-6">
+
+            <div class="card stat-card shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <p class="text-muted mb-2">
+                                Recent Employees
+                            </p>
+
+                            <h2 class="fw-bold mb-0">
+                                {{ recent_employees|length }}
+                            </h2>
+
+                        </div>
+
+                        <div class="stat-icon bg-warning bg-opacity-10 text-warning">
+                            🕒
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= QUICK ACTIONS ================= -->
+
+    <h5 class="fw-bold mb-3">
+        Quick Actions
+    </h5>
+
+
+    <div class="row g-4 mb-4">
+
+
+        <!-- Add Employee -->
+
+        <div class="col-lg-4 col-md-6">
+
+            <div class="card action-card shadow-sm h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div class="action-icon mb-3">
+                        👤
+                    </div>
+
+                    <h5 class="fw-bold">
+                        Add Employee
+                    </h5>
+
+                    <p class="text-muted">
+                        Add a new employee to the system.
+                    </p>
+
+                    <a
+                        href="{% url 'add_employee' %}"
+                        class="btn btn-primary px-4">
+
+                        Add Employee
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Manage Employees -->
+
+        <div class="col-lg-4 col-md-6">
+
+            <div class="card action-card shadow-sm h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div class="action-icon mb-3">
+                        👥
+                    </div>
+
+                    <h5 class="fw-bold">
+                        Manage Employees
+                    </h5>
+
+                    <p class="text-muted">
+                        Search, update and manage employee records.
+                    </p>
+
+                    <a
+                        href="{% url 'show_employees' %}"
+                        class="btn btn-success px-4">
+
+                        View Employees
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Export -->
+
+        <div class="col-lg-4 col-md-6">
+
+            <div class="card action-card shadow-sm h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div class="action-icon mb-3">
+                        📄
+                    </div>
+
+                    <h5 class="fw-bold">
+                        Export Report
+                    </h5>
+
+                    <p class="text-muted">
+                        Download employee records as a CSV report.
+                    </p>
+
+                    <a
+                        href="{% url 'export_employees' %}"
+                        class="btn btn-dark px-4">
+
+                        Export CSV
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= SALARY ================= -->
+
+    <div class="row g-4 mb-4">
+
+
+        <!-- Total Salary -->
+
+        <div class="col-md-6">
+
+            <div class="card stat-card shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <p class="text-muted mb-2">
+                                Total Salary
+                            </p>
+
+                            <h3 class="fw-bold mb-0">
+                                ₹ {{ total_salary|floatformat:2 }}
+                            </h3>
+
+                        </div>
+
+                        <div class="stat-icon bg-danger bg-opacity-10 text-danger">
+                            💰
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Average Salary -->
+
+        <div class="col-md-6">
+
+            <div class="card stat-card shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <p class="text-muted mb-2">
+                                Average Salary
+                            </p>
+
+                            <h3 class="fw-bold mb-0">
+                                ₹ {{ average_salary|floatformat:2 }}
+                            </h3>
+
+                        </div>
+
+                        <div class="stat-icon bg-info bg-opacity-10 text-info">
+                            📊
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= CHARTS ================= -->
+
+    <div class="row g-4 mb-4">
+
+
+        <!-- Employees by Department -->
+
+        <div class="col-lg-6">
+
+            <div class="card section-card shadow-sm h-100">
+
+                <div class="card-header bg-white section-header">
+
+                    📊 Employees by Department
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="chart-container">
+
+                        <canvas id="departmentChart"></canvas>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Average Salary -->
+
+        <div class="col-lg-6">
+
+            <div class="card section-card shadow-sm h-100">
+
+                <div class="card-header bg-white section-header">
+
+                    💰 Average Salary by Department
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="chart-container">
+
+                        <canvas id="salaryChart"></canvas>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= DEPARTMENT TABLE ================= -->
+
+    <div class="card section-card shadow-sm mb-4">
+
+        <div class="card-header bg-white section-header">
+
+            Employees by Department
+
+        </div>
+
+        <div class="card-body p-0">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th class="px-4">
+                                Department
+                            </th>
+
+                            <th>
+                                Total Employees
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for item in department_data %}
+
+                        <tr>
+
+                            <td class="px-4 fw-semibold">
+                                {{ item.department }}
+                            </td>
+
+                            <td>
+                                {{ item.total }}
+                            </td>
+
+                        </tr>
+
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td
+                                colspan="2"
+                                class="text-center text-muted py-4">
+
+                                No department data found.
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= RECENT EMPLOYEES ================= -->
+
+    <div class="card section-card shadow-sm mb-5">
+
+        <div class="card-header bg-white section-header">
+
+            Recently Added Employees
+
+        </div>
+
+        <div class="card-body p-0">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th class="px-4">
+                                Employee ID
+                            </th>
+
+                            <th>
+                                Name
+                            </th>
+
+                            <th>
+                                Email
+                            </th>
+
+                            <th>
+                                Department
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for employee in recent_employees %}
+
+                        <tr>
+
+                            <td class="px-4 fw-semibold">
+                                {{ employee.emp_id }}
+                            </td>
+
+                            <td>
+                                {{ employee.name }}
+                            </td>
+
+                            <td>
+                                {{ employee.email }}
+                            </td>
+
+                            <td>
+                                {{ employee.department }}
+                            </td>
+
+                        </tr>
+
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td
+                                colspan="4"
+                                class="text-center text-muted py-4">
+
+                                No employees found.
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= CHART.JS ================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+
+    /* ================= EMPLOYEE CHART ================= */
+
+    const departmentLabels = [
+
+        {% for item in department_data %}
+
+            "{{ item.department }}",
+
+        {% endfor %}
+
+    ];
+
+
+    const employeeCounts = [
+
+        {% for item in department_data %}
+
+            {{ item.total }},
+
+        {% endfor %}
+
+    ];
+
+
+    const departmentCtx =
+        document.getElementById('departmentChart');
+
+
+    new Chart(departmentCtx, {
+
+        type: 'bar',
+
+        data: {
+
+            labels: departmentLabels,
+
+            datasets: [{
+
+                label: 'Number of Employees',
+
+                data: employeeCounts,
+
+                borderWidth: 1
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true,
+
+                    ticks: {
+
+                        stepSize: 1
+
+                    }
+
+                }
+
+            },
+
+            plugins: {
+
+                legend: {
+
+                    display: true
+
+                },
+
+                tooltip: {
+
+                    callbacks: {
+
+                        label: function(context) {
+
+                            return " Employees: " + context.raw;
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    });
+
+
+
+    /* ================= SALARY CHART ================= */
+
+    const salaryLabels = [
+
+        {% for item in salary_data %}
+
+            "{{ item.department }}",
+
+        {% endfor %}
+
+    ];
+
+
+    const salaryValues = [
+
+        {% for item in salary_data %}
+
+            {{ item.average_salary|default:0|floatformat:0 }},
+
+        {% endfor %}
+
+    ];
+
+
+    const salaryCtx =
+        document.getElementById('salaryChart');
+
+
+    new Chart(salaryCtx, {
+
+        type: 'bar',
+
+        data: {
+
+            labels: salaryLabels,
+
+            datasets: [{
+
+                label: 'Average Salary',
+
+                data: salaryValues,
+
+                borderWidth: 1
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true
+
+                }
+
+            },
+
+            plugins: {
+
+                legend: {
+
+                    display: true
+
+                },
+
+                tooltip: {
+
+                    callbacks: {
+
+                        label: function(context) {
+
+                            return " Average Salary: ₹" + context.raw;
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    });
+
+</script>
+
+
+{% endblock %}
+

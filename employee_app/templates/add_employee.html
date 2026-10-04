@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Add Employee
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-4">
+
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Add Employee</h2>
+            <p class="text-muted mb-0">
+                Add a new employee to the system
+            </p>
+        </div>
+
+        <a href="{% url 'show_employees' %}" class="btn btn-outline-secondary">
+            ← Back to Employees
+        </a>
+    </div>
+
+
+    <!-- Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert">
+                </button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+
+    <!-- Add Employee Card -->
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-dark text-white py-3">
+            <h5 class="mb-0">
+                <i class="bi bi-person-plus"></i>
+                Employee Information
+            </h5>
+        </div>
+
+
+        <div class="card-body p-4">
+
+            <form method="POST"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row g-3">
+
+                    <!-- Employee ID -->
+                    <div class="col-md-6">
+                        <label for="emp_id" class="form-label fw-semibold">
+                            Employee ID
+                        </label>
+
+                        <input
+                            type="text"
+                            name="emp_id"
+                            id="emp_id"
+                            class="form-control"
+                            placeholder="Enter employee ID"
+                            required>
+                    </div>
+
+
+                    <!-- Name -->
+                    <div class="col-md-6">
+                        <label for="name" class="form-label fw-semibold">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="name"
+                            id="name"
+                            class="form-control"
+                            placeholder="Enter employee name"
+                            required>
+                    </div>
+
+
+                    <!-- Email -->
+                    <div class="col-md-6">
+                        <label for="email" class="form-label fw-semibold">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            id="email"
+                            class="form-control"
+                            placeholder="example@gmail.com"
+                            required>
+                    </div>
+
+
+                    <!-- Phone -->
+                    <div class="col-md-6">
+                        <label for="phone" class="form-label fw-semibold">
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="text"
+                            name="phone"
+                            id="phone"
+                            class="form-control"
+                            placeholder="Enter 10-digit phone number"
+                            maxlength="10"
+                            pattern="[0-9]{10}"
+                            required>
+
+                        <div class="form-text">
+                            Enter a valid 10-digit phone number.
+                        </div>
+                    </div>
+
+
+                    <!-- Department -->
+                    <div class="col-md-6">
+                        <label for="department" class="form-label fw-semibold">
+                            Department
+                        </label>
+
+                        <input
+                            type="text"
+                            name="department"
+                            id="department"
+                            class="form-control"
+                            placeholder="e.g. IT, HR, Finance"
+                            required>
+                    </div>
+
+
+                    <!-- Salary -->
+                    <div class="col-md-6">
+                        <label for="salary" class="form-label fw-semibold">
+                            Salary
+                        </label>
+
+                        <input
+                            type="number"
+                            name="salary"
+                            id="salary"
+                            class="form-control"
+                            placeholder="Enter salary"
+                            min="0"
+                            required>
+                    </div>
+
+
+                    <!-- Employee Photo -->
+                    <div class="col-12">
+
+                        <label for="photo" class="form-label fw-semibold">
+                            Employee Photo
+                        </label>
+
+                        <input
+                            type="file"
+                            name="photo"
+                            id="photo"
+                            class="form-control"
+                            accept="image/*">
+
+                        <div class="form-text">
+                            Upload an employee photo. JPG, JPEG or PNG recommended.
+                        </div>
+
+                    </div>
+
+
+                    <!-- Buttons -->
+                    <div class="col-12 mt-4">
+
+                        <div class="d-flex gap-2 justify-content-end">
+
+                            <a href="{% url 'show_employees' %}"
+                               class="btn btn-outline-secondary px-4">
+                                Cancel
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-dark px-4">
+                                Add Employee
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+

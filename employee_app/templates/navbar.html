@@ -1,0 +1,140 @@
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+
+    <div class="container-fluid px-4">
+
+        <!-- Brand -->
+
+        <a class="navbar-brand fw-bold"
+           href="{% url 'dashboard' %}">
+
+            Employee Management
+
+        </a>
+
+
+        <!-- Mobile Toggle -->
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar"
+            aria-controls="mainNavbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+
+        <!-- Navbar Menu -->
+
+        <div class="collapse navbar-collapse" id="mainNavbar">
+
+            <div class="navbar-nav ms-auto align-items-lg-center">
+
+                <!-- Dashboard -->
+
+                <a
+                    href="{% url 'dashboard' %}"
+                    class="nav-link px-3">
+
+                    Dashboard
+
+                </a>
+
+
+                <!-- Employees -->
+
+                <a
+                    href="{% url 'show_employees' %}"
+                    class="nav-link px-3">
+
+                    Employees
+
+                </a>
+
+
+                <!-- Add Employee -->
+
+                <a
+                    href="{% url 'add_employee' %}"
+                    class="nav-link px-3">
+
+                    Add Employee
+
+                </a>
+
+
+                <!-- Profile -->
+
+                <a
+                    href="{% url 'profile' %}"
+                    class="nav-link px-3">
+
+                    Profile
+
+                </a>
+
+
+                <!-- Change Password -->
+
+                <a
+                    href="{% url 'change_password' %}"
+                    class="nav-link px-3">
+
+                    Change Password
+
+                </a>
+
+
+                <!-- Logout -->
+
+                <a
+                    href="{% url 'user_logout' %}"
+                    class="btn btn-danger btn-sm ms-lg-3 mt-2 mt-lg-0 px-3">
+
+                    Logout
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= MESSAGES ================= -->
+
+{% if messages %}
+
+    <div class="container mt-3">
+
+        {% for message in messages %}
+
+            <div
+                class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm"
+                role="alert">
+
+                {{ message }}
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close">
+                </button>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+{% endif %}
