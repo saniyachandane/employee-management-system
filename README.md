@@ -194,3 +194,31 @@ This project was developed to gain practical experience in:
 B.Tech Computer Science Engineering
 
 Skills: Python | Django | SQL | MySQL | HTML | CSS | JavaScript
+
+
+## 📸 Screenshots
+
+### 🔐 Login Page
+
+![Login Page](screenshots/login.png)
+
+### 📊 Dashboard
+
+![Dashboard](screenshots/dashboard1.png)
+
+![Dashboard](screenshots/dashboard2.png)
+
+![Dashboard](screenshots/dashboard3.png)
+
+### 👥 Employee List
+
+![Employee List](screenshots/employees-list.png)
+
+### ➕ Add Employee
+
+![Add Employee](screenshots/add-employee.png)
+
+### 👤 Employee Details
+
+![Employee Details](screenshots/employee_details.png)
+
